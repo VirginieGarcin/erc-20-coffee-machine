@@ -1,3 +1,8 @@
+import {AbiItem} from "web3-utils";
+
+export type TokenContractType = AbiItem[];
+export type SalesContractType = AbiItem[];
+
 export const tokenSaleContractABI: SalesContractType = [
     {
         "inputs": [],

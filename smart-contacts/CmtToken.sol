@@ -7,7 +7,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 contract CoffeeMachineToken is ERC20, ERC20Burnable, Ownable {
 
-    event CoffeeBought(address indexed receiver, address indexed buyer);
+    event CoffeeBought(address indexed buyer);
 
     constructor()
     ERC20("CoffeeMachineToken", "CMT")
@@ -24,9 +24,8 @@ contract CoffeeMachineToken is ERC20, ERC20Burnable, Ownable {
         _mint(to, amount);
     }
 
-    function useOneTokenToGetACoffee(address account) public {
-        _spendAllowance(account, msg.sender, 1);
-        _burn(msg.sender, 1);
-        emit CoffeeBought(msg.sender, account);
+    function useOneTokenToGetACoffee() public {
+        transfer(owner(), 1);
+        emit CoffeeBought(msg.sender);
     }
 }

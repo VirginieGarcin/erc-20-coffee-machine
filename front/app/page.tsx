@@ -2,15 +2,15 @@
 
 import {useEffect, useState} from "react";
 import Web3, {Contract} from 'web3';
-import {AbiItem} from 'web3-utils';
 import {ethers} from "ethers";
-import {tokenContractABI, tokenSaleContractABI} from "@/app/abis";
-
-type TokenContractType = AbiItem[];
-type SalesContractType = AbiItem[];
+import {SalesContractType, tokenContractABI, TokenContractType, tokenSaleContractABI} from "@/app/abis";
 
 const tokenContractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3'
 const saleContractAddress = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512'
+
+type CoffeeBoughtEvent = {
+    buyer: string;
+};
 
 export default function Home() {
 
@@ -27,7 +27,8 @@ export default function Home() {
     const [pouring, isPouring] = useState<boolean>(false);
     const [coffeeCount, setCoffeeCount] = useState<number>(0);
     const [balance, setBalance] = useState<number>(0);
-    const [tokenPrice, setTokenPrice] = useState<string>();
+    const [tokenPrice, setTokenPrice] = useState<number>(0);
+    const [coffeesBought, setCoffeesBought] = useState<CoffeeBoughtEvent[]>([]);
 
     useEffect(() => {
         const web3 = new Web3(window.ethereum);
@@ -85,6 +86,16 @@ export default function Home() {
     const initTokenContract = (web3: Web3) => {
         const tokenContractInstance = new web3.eth.Contract(tokenContractABI, tokenContractAddress);
         setTokenContractInstance(tokenContractInstance);
+
+        tokenContractInstance.events.CoffeeBought({
+            fromBlock: "latest"
+        }).on("data", (event) => {
+            console.log("New Event:", event);
+            console.log("Buyer", event.returnValues[0]);
+            const eventCoffeeBought: CoffeeBoughtEvent = {buyer: event.returnValues[0]}
+            setCoffeesBought(coffeesBought => [...coffeesBought, eventCoffeeBought]);
+            console.log('coffeesBought', coffeesBought)
+        })
     }
 
     const connectMetaMask = async () => {
@@ -128,6 +139,7 @@ export default function Home() {
             setCoffeeCount(coffeeCount + 1)
         }
     };
+
 
     return (
         <>
@@ -223,8 +235,10 @@ export default function Home() {
                         <div className="overflow-auto">
                             {(!pouring) && (
                                 <div className="flex items-center space-x-2">
-                                    <button onClick={pourCoffee} className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Insert a token
-                                    </button>
+                                    {(balance > 0) && (<button onClick={pourCoffee} className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Insert a token
+                                    </button>)}
+                                    {(balance <= 0) && (<button disabled className="bg-blue-200 text-white px-3 py-1 rounded">Insert a token
+                                    </button>)}
                                 </div>)}
 
                             {(pouring) && (
@@ -255,6 +269,15 @@ export default function Home() {
                                     ))}
                                 </div>
                             </div>
+                        </div>)}
+                    {(coffeesBought.length > 0) && (
+                        <div className="mt-6 bg-gray-900 text-green-400 font-mono p-4 rounded-lg shadow overflow-auto">
+                            <h3 className="text-lg font-semibold mb-2 border-b border-green-500 pb-2">[Event Log]</h3>
+                            <ul className="space-y-1 text-xs">
+                                {coffeesBought.map((event: CoffeeBoughtEvent, index) => (
+                                    <li key={index}>Coffee bought by {event.buyer == account ? 'YOU' : event.buyer}.</li>
+                                ))}
+                            </ul>
                         </div>)}
                 </div>
             </div>
