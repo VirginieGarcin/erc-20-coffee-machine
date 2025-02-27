@@ -48,7 +48,7 @@ export const tokenSaleContractABI: SalesContractType = [
         "stateMutability": "view",
         "type": "function"
     }
-]
+];
 export const tokenContractABI: TokenContractType = [
     {
         "inputs": [],
@@ -194,12 +194,6 @@ export const tokenContractABI: TokenContractType = [
             {
                 "indexed": true,
                 "internalType": "address",
-                "name": "receiver",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
                 "name": "buyer",
                 "type": "address"
             }
@@ -316,37 +310,6 @@ export const tokenContractABI: TokenContractType = [
             }
         ],
         "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "value",
-                "type": "uint256"
-            }
-        ],
-        "name": "burn",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "account",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "value",
-                "type": "uint256"
-            }
-        ],
-        "name": "burnFrom",
-        "outputs": [],
-        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -512,4 +475,4 @@ export const tokenContractABI: TokenContractType = [
         "stateMutability": "nonpayable",
         "type": "function"
     }
-]
+];

@@ -121,8 +121,9 @@ export default function Home() {
 
     const pourCoffee = async () => {
         isPouring(true);
+        setCoffeeErrorMessage('')
         if (!pouring && tokenContractInstance) {
-            tokenContractInstance.methods.useOneTokenToGetACoffee().send({from: account}).then((value) => {
+            tokenContractInstance.methods.useOneTokenToGetACoffee().send({from: account}).then(() => {
                 serveCoffee();
             }, (error: Error) => {
                 setCoffeeErrorMessage(error.message)
@@ -144,7 +145,7 @@ export default function Home() {
     return (
         <>
             <h1 className="text-3xl font-bold mb-6 text-center p-3 bg-gray-700 text-white"><img src="machine.jpg" alt=""
-                className="w-10 h-10 object-cover rounded mr-4 inline-block"/> ERC-20 Coffee Machine</h1>
+                className="w-10 h-10 object-cover rounded mr-4 inline-block"/> ERC-20 Coffee Shop</h1>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-8">
                 <div>
