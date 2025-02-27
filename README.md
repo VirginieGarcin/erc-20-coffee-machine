@@ -11,15 +11,8 @@ We also listen to blockchain events.
 
 ## Demo
 
-You can see a demo of the working project here:
-
-<object width="425" height="350">
-  <param name="movie" value="https://www.youtube.com/embed/Bxyrov0gTMg?si=CNZanRSg3sjKrBNocc_load_policy=1&cc_lang_pref=en" />
-  <param name="wmode" value="transparent" />
-  <embed src="https://www.youtube.com/embed/Bxyrov0gTMg?si=CNZanRSg3sjKrBNocc_load_policy=1&cc_lang_pref=en"
-         type="application/x-shockwave-flash"
-         wmode="transparent" width="425" height="350" />
-</object>
+You can see a demo of the working project
+here: https://www.youtube.com/embed/Bxyrov0gTMg?si=CNZanRSg3sjKrBNocc_load_policy=1&cc_lang_pref=en
 
 ## Installation
 
